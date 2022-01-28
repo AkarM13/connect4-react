@@ -33,6 +33,8 @@ export default function Game() {
 
     setBoard(board);
     setCurrentPlayer(player1);
+    setGameOver(false);
+    setMessage("");
 
     randomStart();
   }
@@ -106,13 +108,6 @@ export default function Game() {
           } else {
             setBoard(currentBoard);
             setCurrentPlayer(togglePlayer());
-
-            setTimeout(function () {
-              // Call ai play
-              if (currentPlayer === player2) {
-                aiPlay();
-              }
-            }, 500);
           }
         } else {
           setMessage("Game over. Please start a new game.");
@@ -121,6 +116,14 @@ export default function Game() {
     }
   }
 
+  useEffect(() => {
+    setTimeout(function () {
+      // Call ai play
+      if (currentPlayer === player2) {
+        aiPlay();
+      }
+    }, 700);
+  }, [currentPlayer, player2]);
   return (
     <div>
       <div
