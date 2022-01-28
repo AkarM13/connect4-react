@@ -4,3 +4,163 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+html {
+  overflow: none;
+  background-color: black;
+}
+
+body {
+  font-family: "VT323", monospace;
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  font-size: 50px;
+  color: #fff;
+}
+
+.header {
+  font-size: 100px;
+}
+
+table {
+  margin: 0 auto;
+  border-spacing: 0px 0px;
+}
+
+.row {
+  display: flex;
+  margin: 2%;
+  align-items: center;
+  justify-content: center;
+}
+
+.player {
+  margin: 2%;
+}
+
+.inactivePlayer {
+  opacity: 0.3;
+}
+
+.activePlayer {
+  opacity: 1;
+}
+
+.button {
+  background-color: #303030;
+  color: #50c8ff;
+  height: 7%;
+  width: 34%;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-bottom: 25px;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.5s, color 0.5s;
+}
+
+.button:hover {
+  background-color: #50c8ff;
+  color: #303030;
+  transition: background-color 0.5s, color 0.5s;
+}
+
+.cell {
+  height: 70px;
+  width: 70px;
+  background-color: #1990ff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.circle {
+  height: 15px;
+  width: 15px;
+  border: 1px solid #000;
+  border-radius: 100px;
+}
+
+.circles {
+  margin: -40px 0 25px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.red-sm {
+  background-color: red;
+}
+
+.yellow-sm {
+  background-color: yellow;
+}
+
+.message {
+  text-align: center;
+  font-size: 17px;
+}
+
+.white {
+  height: 60px;
+  width: 60px;
+  background-color: #000;
+  border-radius: 100px;
+}
+
+.red {
+  height: 60px;
+  width: 60px;
+  background-color: red;
+  border-radius: 100px;
+  transition: background-color 0.5s;
+}
+
+.yellow {
+  height: 60px;
+  width: 60px;
+  background-color: yellow;
+  border-radius: 100px;
+  transition: background-color 0.5s;
+}
+
+.winorloss {
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+  margin: 0 auto;
+  display: table;
+}
+
+.centerDiv {
+  display: table-cell;
+  vertical-align: middle;
+  font-family: "VT323", monospace;
+  font-size: 50px;
+}
+
+/* Replay button */

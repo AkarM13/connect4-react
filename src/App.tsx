@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Button from "./components/UI/Button";
 
 function App() {
@@ -13,10 +14,30 @@ function App() {
       </ul>
       <h3 className="text-lg text-textColor font-semibold mt-8">
         HOW TO PLAY:
+        <ul className="mt-2 text-description text-lg font-normal">
+          <li>
+            First, decide who goes first and what color each player will have.
+          </li>
+          <li>
+            Players must alternate turns, and only one disc can be dropped in
+            each turn.
+          </li>
+          <li>
+            On your turn drop one of your colored discs from the top into any of
+            seven slots.
+          </li>
+          <li>The game ends when there is a 4-in-a-row or a stalemate.</li>
+          <li>
+            The starter of the previous game goes second on the next game.
+          </li>
+        </ul>
       </h3>
-      <Button variant="primary" className="self-center mt-4">
-        Start the game
-      </Button>
+
+      <Link to="/game">
+        <Button variant="primary" className="self-center mt-4">
+          Start the game
+        </Button>
+      </Link>
     </div>
   );
 }
