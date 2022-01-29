@@ -1,18 +1,13 @@
-import _ from "lodash";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../components/UI/Button";
 import {
   Board,
   checkAll,
   fillBoard,
-  getNextPlayableRow,
-  getValidLocations,
-  makeMove,
   minimax,
   pickBestMove,
-  randomChoice,
-  scoreMove,
 } from "./boardHelpers";
+import Row from "./Row";
 
 export default function Game() {
   const [player1, setPlayer1] = useState(1);
@@ -28,16 +23,20 @@ export default function Game() {
     initBoard();
   }, []);
 
+  function setToDefault(board: Board) {
+    setPlayer1(1);
+    setPlayer2(2);
+    setCurrentPlayer(player1);
+    setBoard(board);
+    setGameOver(false);
+    setMessage("");
+    setMode(true);
+  }
   function initBoard() {
     // 6 rows, and 7 columns
     const board = fillBoard(6, 7);
 
-    setBoard(board);
-    setCurrentPlayer(player1);
-    setGameOver(false);
-    setMessage("");
-    setIsAiPlaying(false);
-
+    setToDefault(board);
     randomStart();
   }
 
@@ -74,6 +73,7 @@ export default function Game() {
           gameOver
         );
       }
+
       play(col);
     }
   }
@@ -135,6 +135,21 @@ export default function Game() {
       }
     }, 1000);
   }, [currentPlayer, player2]);
+
+  useEffect(() => {
+    if (board && currentPlayer === player1) {
+      const bestMoveForPlayer = minimax(
+        board,
+        5,
+        false,
+        player1,
+        player2,
+        gameOver
+      );
+      console.log("Best move for player: ", bestMoveForPlayer);
+    }
+  }, [currentPlayer]);
+
   return (
     <div className="container">
       <div
@@ -161,6 +176,7 @@ export default function Game() {
             variant="primary"
             className="mt-10 self-center"
             onClick={() => {
+              setCurrentPlayer(player1);
               initBoard();
             }}
           >
@@ -211,37 +227,3 @@ export default function Game() {
     </div>
   );
 }
-
-// Row component
-const Row = ({ row, play }: any) => {
-  return (
-    <tr>
-      {row.map((cell: any, i: any) => (
-        <Cell key={i} value={cell} columnIndex={i} play={play} />
-      ))}
-    </tr>
-  );
-};
-
-// Cell Component
-const Cell = ({ value, columnIndex, play }: any) => {
-  let color = "white";
-  if (value === 1) {
-    color = "red";
-  } else if (value === 2) {
-    color = "yellow";
-  }
-
-  return (
-    <td>
-      <div
-        className={`cell`}
-        onClick={() => {
-          play(columnIndex);
-        }}
-      >
-        <div className={color}> </div>
-      </div>
-    </td>
-  );
-};
