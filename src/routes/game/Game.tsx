@@ -7,6 +7,7 @@ import {
   minimax,
   pickBestMove,
 } from "./boardHelpers";
+import PlayerCard from "./PlayerCard";
 import Row from "./Row";
 
 export default function Game() {
@@ -18,6 +19,8 @@ export default function Game() {
   const [message, setMessage] = useState("");
   const [mode, setMode] = useState(true);
 
+  const [player1RoundsWon, setPlayer1RoundsWon] = useState(0);
+  const [player2RoundsWon, setPlayer2RoundsWon] = useState(0);
   const [isAiPlaying, setIsAiPlaying] = useState(false);
   useEffect(() => {
     initBoard();
@@ -100,12 +103,14 @@ export default function Game() {
             setBoard(currentBoard);
             setGameOver(true);
             setIsAiPlaying(false);
-            setMessage("Player 1 (black) wins!");
+            setMessage("Player 1 (RED) wins!");
+            setPlayer1RoundsWon(player1RoundsWon + 1);
           } else if (result === player2) {
             setBoard(currentBoard);
             setGameOver(true);
             setIsAiPlaying(false);
-            setMessage("Player 2 (green) wins!");
+            setMessage("Player 2 (YELLOW) wins!");
+            setPlayer2RoundsWon(player2RoundsWon + 1);
           } else if (result === "draw") {
             setBoard(currentBoard);
             setGameOver(true);
@@ -151,80 +156,80 @@ export default function Game() {
   }, [currentPlayer]);
 
   return (
-    <div className="container ">
-      <div
-        className="winorloss "
-        style={{
-          backgroundColor:
-            gameOver && currentPlayer === 1
-              ? "rgba(0,200,0,0.4)"
-              : "rgba(200,0,0,0.4)",
-          display: gameOver && currentPlayer ? "table" : "none",
-        }}
-      >
-        <div className="flex justify-center items-center flex-col h-full">
-          {gameOver && currentPlayer === 1 ? (
-            <div>
-              <h1>{"You WON!!!"}</h1>
-            </div>
-          ) : (
-            <div>
-              <h1>{"you LOST!!!"}</h1>
-            </div>
-          )}
-          <Button
-            variant="primary"
-            className="mt-10 self-center"
-            onClick={() => {
-              setCurrentPlayer(player1);
-              initBoard();
-            }}
-          >
-            New Game
-          </Button>
-        </div>
-      </div>
-      <div className="game mt-12">
-        <h1 className="text-primary text-5xl mt-4 font-semibold">
-          CONNECT<span className="text-description">4</span>
-        </h1>
-        <div className="row mt-4">
-          <div
-            className={
-              "player red" +
-              (currentPlayer === player1 ? " activePlayer" : " inactivePlayer")
-            }
-          ></div>
-          <div
-            className={
-              "player yellow" +
-              (currentPlayer === player2 ? " activePlayer" : " inactivePlayer")
-            }
-          ></div>
-        </div>
-        <table
-          className={`${isAiPlaying ? "pointer-events-none opacity-70" : ""}`}
+    <div className="container flex justify-center items-center">
+      <PlayerCard
+        isItTheirTurn={currentPlayer === player1}
+        player={player1}
+        roundsWon={player1RoundsWon}
+      />
+      <div className="">
+        <div
+          className="winorloss "
+          style={{
+            backgroundColor:
+              gameOver && currentPlayer === 1
+                ? "rgba(0,200,0,0.4)"
+                : "rgba(200,0,0,0.4)",
+            display: gameOver && currentPlayer ? "table" : "none",
+          }}
         >
-          <thead />
-          <tbody className="board-container">
-            {board &&
-              board.map((row, i) => (
-                <Row
-                  key={i}
-                  row={row}
-                  play={(column: number) => {
-                    if (row[column] === 1 || row[column] === 2) {
-                      setMessage("Invalid move");
-                    } else {
-                      play(column);
-                    }
-                  }}
-                />
-              ))}
-          </tbody>
-        </table>
-        <p className="message"> {message} </p>
+          <div className="flex justify-center items-center flex-col h-full">
+            {gameOver && currentPlayer === 1 ? (
+              <div>
+                <h1>{"You WON!!!"}</h1>
+              </div>
+            ) : (
+              <div>
+                <h1>{"you LOST!!!"}</h1>
+              </div>
+            )}
+            <Button
+              variant="primary"
+              className="mt-10 self-center"
+              onClick={() => {
+                setCurrentPlayer(player1);
+                initBoard();
+              }}
+            >
+              New Game
+            </Button>
+          </div>
+        </div>
+        <div className="game mt-12">
+          <h1 className="text-primary text-5xl mt-4 font-semibold">
+            CONNECT<span className="text-description">4</span>
+          </h1>
+          <table
+            className={`mt-20 ${
+              isAiPlaying ? "pointer-events-none opacity-70" : ""
+            }`}
+          >
+            <thead />
+            <tbody className="board-container">
+              {board &&
+                board.map((row, i) => (
+                  <Row
+                    key={i}
+                    row={row}
+                    play={(column: number) => {
+                      if (row[column] === 1 || row[column] === 2) {
+                        setMessage("Invalid move");
+                      } else {
+                        play(column);
+                      }
+                    }}
+                  />
+                ))}
+            </tbody>
+          </table>
+          <p className="message"> {message} </p>
+        </div>
       </div>
+      <PlayerCard
+        isItTheirTurn={currentPlayer === player2}
+        player={player2}
+        roundsWon={player2RoundsWon}
+      />
     </div>
   );
 }
