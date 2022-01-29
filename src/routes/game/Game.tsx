@@ -58,7 +58,7 @@ export default function Game() {
         [col, minimaxScore] = minimax(
           currentBoard,
           5,
-          false,
+          true,
           player1,
           player2,
           gameOver
@@ -150,6 +150,7 @@ export default function Game() {
           } else {
             // Hich winning condition'ek rwy nayawa, kawata bardawam ba.
             setCurrentPlayer(togglePlayer());
+            setMessage("");
           }
         } else {
           setMessage("Game over. Please start a new game.");
@@ -241,7 +242,16 @@ export default function Game() {
                 })}
             </tbody>
           </table>
-          <p className="message"> {message} </p>
+          <p
+            className={`mt-8 text-center text-lg ${
+              message.includes("Invalid")
+                ? "text-red-600 text-2xl"
+                : "text-xl text-description"
+            }`}
+          >
+            {" "}
+            {message}{" "}
+          </p>
         </div>
       </div>
       <PlayerCard
