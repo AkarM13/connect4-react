@@ -57,7 +57,7 @@ export default function Game() {
         // Bapey minimax algorithm'aka, ch column'ek basha.
         [col, minimaxScore] = minimax(
           currentBoard,
-          4,
+          5,
           true,
           player1,
           player2,
