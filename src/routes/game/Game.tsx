@@ -36,6 +36,7 @@ export default function Game() {
     setCurrentPlayer(player1);
     setGameOver(false);
     setMessage("");
+    setIsAiPlaying(false);
 
     randomStart();
   }
@@ -149,11 +150,11 @@ export default function Game() {
         <div className="flex justify-center items-center flex-col h-full">
           {gameOver && currentPlayer === 1 ? (
             <div>
-              <h1>{"Yay, You WON!!!"}</h1>
+              <h1>{"You WON!!!"}</h1>
             </div>
           ) : (
             <div>
-              <h1>{"Shoot, you LOST!!!"}</h1>
+              <h1>{"you LOST!!!"}</h1>
             </div>
           )}
           <Button
@@ -169,10 +170,8 @@ export default function Game() {
       </div>
       <div className="game">
         <h1 className="text-primary text-4xl mt-4">Connect4</h1>
-        <Button variant="secondary" onClick={() => setMode(!mode)}>
-          {mode ? "Minimax" : "Random"}
-        </Button>
-        <div className={"row"}>
+
+        <div className="row mt-4">
           <div
             className={
               "player red" +
@@ -196,7 +195,13 @@ export default function Game() {
                 <Row
                   key={i}
                   row={row}
-                  play={(column: number) => play(column)}
+                  play={(column: number) => {
+                    if (row[column] === 1 || row[column] === 2) {
+                      setMessage("Invalid move");
+                    } else {
+                      play(column);
+                    }
+                  }}
                 />
               ))}
           </tbody>
@@ -230,7 +235,7 @@ const Cell = ({ value, columnIndex, play }: any) => {
   return (
     <td>
       <div
-        className="cell"
+        className={`cell`}
         onClick={() => {
           play(columnIndex);
         }}
