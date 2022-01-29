@@ -1,6 +1,10 @@
 import _ from "lodash";
 export type Board = Array<Array<number | null>>;
 
+// Ama matrix'eky 6 ba 7 drwst aka.
+// 6 rows
+// 7 cols
+// w pry akat la null bo awai dwatr btwanin daskari kainawa
 export function fillBoard(rows: number, columns: number) {
   const board = [];
   for (let rows = 0; rows < 6; rows++) {
@@ -14,10 +18,12 @@ export function fillBoard(rows: number, columns: number) {
   return board;
 }
 
+// Generate a random number between 0 and 6
 export function randomPlay() {
   return Math.floor(Math.random() * Math.floor(7));
 }
 
+// Ama array'eky ayayte random'y elementek'y awe return aka
 export function randomChoice(array: Array<number>) {
   return array[Math.floor(Math.random() * array.length)];
 }
@@ -33,23 +39,27 @@ export function makeMove(
   }
 }
 
+// Sairy matrix'aka aka agar 3 dana ba dwai yaka bwn ba verticall'y
+// Boolean'ek return aka, true or false
 export function checkVertical(board: Board) {
   // Check only if row is 3 or greater
-  for (let r = 3; r < 6; r++) {
-    for (let c = 0; c < 7; c++) {
-      if (board[r][c]) {
+  for (let rows = 3; rows < 6; rows++) {
+    for (let columns = 0; columns < 7; columns++) {
+      if (board[rows][columns]) {
         if (
-          board[r][c] === board[r - 1][c] &&
-          board[r][c] === board[r - 2][c] &&
-          board[r][c] === board[r - 3][c]
+          board[rows][columns] === board[rows - 1][columns] &&
+          board[rows][columns] === board[rows - 2][columns] &&
+          board[rows][columns] === board[rows - 3][columns]
         ) {
-          return board[r][c];
+          return board[rows][columns];
         }
       }
     }
   }
 }
 
+// Sairy matrix'aka aka agar 3 dana ba dwai yaka bwn ba horizontal'y
+// Boolean'ek return aka, true or false
 export function checkHorizontal(board: Board) {
   // Check only if column is 3 or less
   for (let r = 0; r < 6; r++) {
@@ -67,6 +77,8 @@ export function checkHorizontal(board: Board) {
   }
 }
 
+// Sairy matrix'aka aka agar 3 dana ba dwai yaka bwn ba diagonally -> /
+// Boolean'ek return aka, true or false
 export function checkDiagonalRight(board: Board) {
   // Check only if row is 3 or greater AND column is 3 or less
   for (let r = 3; r < 6; r++) {
@@ -84,6 +96,8 @@ export function checkDiagonalRight(board: Board) {
   }
 }
 
+// Sairy matrix'aka aka agar 3 dana ba dwai yaka bwn ba diagonally -> \
+// Boolean'ek return aka, true or false
 export function checkDiagonalLeft(board: Board) {
   // Check only if row is 3 or greater AND column is 3 or greater
   for (let r = 3; r < 6; r++) {
@@ -141,6 +155,8 @@ export function getCount(arr: Array<any>, n: number | null) {
 }
 
 // Is this a valid location to add the move to
+// Aya am location'a bakalk yat
+// Har location'ek null'y tiabw, diara bakalk yat chwnka hich playerek bakari nahenawa.
 export function isValidLocation(arr: Array<any>) {
   return arr.includes(null);
 }
@@ -166,6 +182,7 @@ export function scoreEvaluation(arr: any, player: number) {
   return score;
 }
 
+// Array flat aka, multidimensional akata one dimensional array
 export function flatten(arr: Array<any>) {
   return [].concat.apply([], arr);
 }
@@ -268,24 +285,6 @@ export function getNextPlayableRow(board: Board, column: number) {
       return rows;
     }
   }
-}
-
-export function pickBestMove(board: Board, player: number) {
-  const modifiedBoard = board;
-  const validLocations = getValidLocations(board);
-  let bestScore = Number.NEGATIVE_INFINITY;
-  let bestColumns = randomPlay();
-  for (let i = 0; i < validLocations.length; i++) {
-    const row = getNextPlayableRow(modifiedBoard, validLocations[i]);
-    let tempBoard = _.cloneDeep(modifiedBoard);
-    makeMove(tempBoard, row, validLocations[i], player);
-    const score = scoreMove(tempBoard, player);
-    if (score > bestScore) {
-      bestScore = score;
-      bestColumns = validLocations[i];
-    }
-  }
-  return bestColumns;
 }
 
 export function minimax(

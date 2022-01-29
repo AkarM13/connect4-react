@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
 import Button from "../../components/UI/Button";
-import {
-  Board,
-  checkAll,
-  fillBoard,
-  minimax,
-  pickBestMove,
-} from "./boardHelpers";
+import { Board, checkAll, fillBoard, minimax } from "./boardHelpers";
 import PlayerCard from "./PlayerCard";
 import Row from "./Row";
 
@@ -17,7 +11,6 @@ export default function Game() {
   const [board, setBoard] = useState<Board>();
   const [gameOver, setGameOver] = useState(false);
   const [message, setMessage] = useState("");
-  const [mode, setMode] = useState(true);
 
   const [player1RoundsWon, setPlayer1RoundsWon] = useState(0);
   const [player2RoundsWon, setPlayer2RoundsWon] = useState(0);
@@ -33,7 +26,6 @@ export default function Game() {
     setBoard(board);
     setGameOver(false);
     setMessage("");
-    setMode(true);
   }
   function initBoard() {
     // 6 rows, and 7 columns
@@ -47,6 +39,8 @@ export default function Game() {
     return currentPlayer === player1 ? player2 : player1;
   }
 
+  // Yan 1 generate bka yan 2 generate bka, bo away bzanin AI yakam piece da ane
+  // Yaxwd ema yakam piece da anein.
   const randomStart = () => {
     // Generate either 1 or 2
     const randomPlayer = Math.floor(Math.random() * (3 - 1) + 1);
@@ -64,9 +58,8 @@ export default function Game() {
       const currentBoard = board;
 
       let col, minimaxScore;
-      if (mode && board !== null) {
-        col = pickBestMove(board, player2);
-      } else {
+      if (board !== null) {
+        // Bapey minimax algorithm'aka, ch column'ek basha.
         [col, minimaxScore] = minimax(
           currentBoard,
           4,
@@ -75,18 +68,46 @@ export default function Game() {
           player2,
           gameOver
         );
-      }
 
-      play(col);
+        // Am method'y play'a wakw awa waya AI click bka law column'ay
+        // ka halbzherdrawa lalayan minimax algorithm'akawa.
+        play(col);
+        console.log("Best move apparently", col);
+      }
     }
   }
 
+  // Toggle auto play with two AI's
+  // useEffect(() => {
+  //   if (currentPlayer === player1 && board !== undefined) {
+  //     const currentBoard = board;
+
+  //     let col, minimaxScore;
+  //     if (mode && board !== null) {
+  //       [col, minimaxScore] = minimax(
+  //         currentBoard,
+  //         6,
+  //         false,
+  //         player1,
+  //         player2,
+  //         gameOver
+  //       );
+  //       console.log("Best move apparently", col);
+  //       play(col);
+  //     }
+  //   }
+  // }, [currentPlayer]);
+
+  // Hamw jarek
   function play(column: number | null) {
     if (column !== null) {
       if (!gameOver) {
+        // Lanaw array multi-dimensional'aka, bapey aw column'w row'ay ka mawa w null nia
+        // assign'y aka bo currentPlayer.
+        // null yan abet ba 1 yan abe ba 2.
+
         // Place piece on board
         let currentBoard = board;
-
         if (currentBoard) {
           for (let r = 5; r >= 0; r--) {
             if (!currentBoard[r][column]) {
@@ -98,6 +119,21 @@ export default function Game() {
 
         // Check status of board
         if (currentBoard !== undefined) {
+          // Xoy connect 4 abe, 4 danabe badwai yaka.
+          // Boya ema method'akanman ka daman nawa pekhatwn la
+          // checkVertical(board) ||
+          // checkDiagonalRight(board) ||
+          // checkDiagonalLeft(board) ||
+          // checkHorizontal(board) ||
+          // checkDraw(board)
+
+          // Amana 7saby 3 dana akan, balam labar away click krawa lasar column'aka esta
+          // Amashy acheta sar, boya agar har yak law winning conditionan'ana rast bw.
+          // awa winner diari akre.
+          // Possible values'akani checkAll() britia:
+          // 1: 1
+          // 2: 2
+          // 3: draw
           let result = checkAll(currentBoard);
           if (result === player1) {
             setBoard(currentBoard);
@@ -117,7 +153,7 @@ export default function Game() {
             setIsAiPlaying(false);
             setMessage("It's a draw!");
           } else {
-            setBoard(currentBoard);
+            // Hich winning condition'ek rwy nayawa, kawata bardawam ba.
             setCurrentPlayer(togglePlayer());
           }
         } else {
@@ -140,20 +176,6 @@ export default function Game() {
       }
     }, 1000);
   }, [currentPlayer, player2]);
-
-  useEffect(() => {
-    if (board && currentPlayer === player1) {
-      const bestMoveForPlayer = minimax(
-        board,
-        5,
-        false,
-        player1,
-        player2,
-        gameOver
-      );
-      console.log("Best move for player: ", bestMoveForPlayer);
-    }
-  }, [currentPlayer]);
 
   return (
     <div className="container flex justify-center items-center">
