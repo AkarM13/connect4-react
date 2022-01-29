@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import Button from "../../components/UI/Button";
-import { Board, checkAll, fillBoard, minimax } from "./boardHelpers";
+import {
+  Board,
+  checkAll,
+  fillBoard,
+  getNextPlayableRow,
+  getValidLocations,
+  minimax,
+} from "./boardHelpers";
 import PlayerCard from "./PlayerCard";
 import Row from "./Row";
 
@@ -32,27 +39,15 @@ export default function Game() {
     const board = fillBoard(6, 7);
 
     setToDefault(board);
-    randomStart();
   }
 
   function togglePlayer() {
     return currentPlayer === player1 ? player2 : player1;
   }
 
-  // Yan 1 generate bka yan 2 generate bka, bo away bzanin AI yakam piece da ane
-  // Yaxwd ema yakam piece da anein.
-  const randomStart = () => {
-    // Generate either 1 or 2
-    const randomPlayer = Math.floor(Math.random() * (3 - 1) + 1);
-
-    if (randomPlayer === player2) {
-      setCurrentPlayer(randomPlayer);
-      setIsAiPlaying(true);
-
-      aiPlay();
-    }
-  };
-
+  if (board !== undefined) {
+    console.log(getValidLocations(board));
+  }
   function aiPlay() {
     if (board !== undefined) {
       const currentBoard = board;
@@ -209,7 +204,7 @@ export default function Game() {
               variant="primary"
               className="mt-10 self-center"
               onClick={() => {
-                setCurrentPlayer(player1);
+                setCurrentPlayer(1);
                 initBoard();
               }}
             >
@@ -229,19 +224,21 @@ export default function Game() {
             <thead />
             <tbody className="board-container">
               {board &&
-                board.map((row, i) => (
-                  <Row
-                    key={i}
-                    row={row}
-                    play={(column: number) => {
-                      if (row[column] === 1 || row[column] === 2) {
-                        setMessage("Invalid move");
-                      } else {
-                        play(column);
-                      }
-                    }}
-                  />
-                ))}
+                board.map((row, i) => {
+                  return (
+                    <Row
+                      key={i}
+                      row={row}
+                      play={(column: number) => {
+                        if (row[column] === 1 || row[column] === 2) {
+                          setMessage("Invalid move");
+                        } else {
+                          play(column);
+                        }
+                      }}
+                    />
+                  );
+                })}
             </tbody>
           </table>
           <p className="message"> {message} </p>

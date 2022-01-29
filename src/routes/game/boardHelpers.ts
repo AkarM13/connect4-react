@@ -267,6 +267,11 @@ export function scoreMove(board: Board, player: number) {
 }
 
 // Get all the valid locations
+// Hamw aw location'ana ahene ka atwanre play bkret.
+// Agar board'aka bakar nahenrabe awa return'y ama aka:
+// [0, 1, 2, 3, 4, 5, 6]
+// Agar column'y 0'am hamwy pr bowa awa return'y ama aka:
+// [1, 2, 3, 4, 5, 6]
 export function getValidLocations(board: Board) {
   const modifiedBoard = board;
   const validLocations = [];
@@ -279,6 +284,10 @@ export function getValidLocations(board: Board) {
 }
 
 // next row that can be played
+// Aw row'ay ka atwanre yari tia bkre bapey zhamray column'aka
+// Bo nmwna agar column = 0
+// w column'y 0 hich bakari nahenabe.
+// Awa anwse 5
 export function getNextPlayableRow(board: Board, column: number) {
   for (let rows = 5; rows >= 0; rows--) {
     if (board[rows][column] === null) {
