@@ -243,13 +243,12 @@ export default function Game() {
             </tbody>
           </table>
           <p
-            className={`mt-8 text-center text-lg ${
+            className={`mt-8 text-center text-lg  h-16 ${
               message.includes("Invalid")
                 ? "text-red-600 text-2xl"
                 : "text-xl text-description"
             }`}
           >
-            {" "}
             {message}{" "}
           </p>
         </div>
