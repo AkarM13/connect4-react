@@ -327,7 +327,7 @@ export function minimax(
       let tempBoard = _.cloneDeep(board);
       if (row) {
         makeMove(tempBoard, row, validLocations[i], player2);
-        const score = minimax(
+        const [col, minimaxScore] = minimax(
           tempBoard,
           depth - 1,
           false,
@@ -335,8 +335,8 @@ export function minimax(
           player2,
           gameOver
         );
-        if (score[1] !== null && score[1] > value) {
-          value = score[1];
+        if (minimaxScore !== null && minimaxScore > value) {
+          value = minimaxScore;
           bestColumns = validLocations[i];
         }
       }
@@ -350,7 +350,7 @@ export function minimax(
       let tempBoard = _.cloneDeep(board);
       if (row) {
         makeMove(tempBoard, row, validLocations[i], 1);
-        const score = minimax(
+        const [col, minimaxScore] = minimax(
           tempBoard,
           depth - 1,
           true,
@@ -358,8 +358,8 @@ export function minimax(
           player2,
           gameOver
         );
-        if (score[1] !== null && score[1] < value) {
-          value = score[1];
+        if (minimaxScore !== null && minimaxScore < value) {
+          value = minimaxScore;
           bestColumns = validLocations[i];
         }
       }

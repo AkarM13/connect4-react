@@ -58,7 +58,7 @@ export default function Game() {
         [col, minimaxScore] = minimax(
           currentBoard,
           5,
-          true,
+          false,
           player1,
           player2,
           gameOver
