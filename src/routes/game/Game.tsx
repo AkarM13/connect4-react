@@ -50,6 +50,7 @@ export default function Game() {
 
     if (randomPlayer === player2) {
       setCurrentPlayer(randomPlayer);
+      setIsAiPlaying(true);
 
       aiPlay();
     }
@@ -97,14 +98,17 @@ export default function Game() {
           if (result === player1) {
             setBoard(currentBoard);
             setGameOver(true);
-            setMessage("Player 1 (red) wins!");
+            setIsAiPlaying(false);
+            setMessage("Player 1 (black) wins!");
           } else if (result === player2) {
             setBoard(currentBoard);
             setGameOver(true);
-            setMessage("Player 2 (red) wins!");
+            setIsAiPlaying(false);
+            setMessage("Player 2 (green) wins!");
           } else if (result === "draw") {
             setBoard(currentBoard);
             setGameOver(true);
+            setIsAiPlaying(false);
             setMessage("It's a draw!");
           } else {
             setBoard(currentBoard);
