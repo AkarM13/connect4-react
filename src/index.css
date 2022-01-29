@@ -6,14 +6,8 @@
 @tailwind utilities;
 
 @import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
-html {
-  overflow: none;
-  background-color: black;
-}
 
 body {
-  font-family: "VT323", monospace;
-  position: fixed; /* Sit on top of the page content */
   width: 100%; /* Full width (cover the whole page) */
   height: 100%; /* Full height (cover the whole page) */
   top: 0;
@@ -35,13 +29,13 @@ h1 {
 }
 
 table {
-  margin: 0 auto;
+  margin: 4rem auto;
   border-spacing: 0px 0px;
 }
 
 .row {
   display: flex;
-  margin: 2%;
+  margin: 1%;
   align-items: center;
   justify-content: center;
 }
@@ -58,23 +52,6 @@ table {
   opacity: 1;
 }
 
-.button {
-  background-color: #303030;
-  color: #50c8ff;
-  height: 7%;
-  width: 34%;
-  border-radius: 5px;
-  margin: 0 auto;
-  margin-bottom: 25px;
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.5s, color 0.5s;
-}
-
 .button:hover {
   background-color: #50c8ff;
   color: #303030;
@@ -82,9 +59,9 @@ table {
 }
 
 .cell {
-  height: 70px;
-  width: 70px;
-  background-color: #1990ff;
+  height: 90px;
+  width: 90px;
+  background-color: #e0e2eb;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -106,11 +83,11 @@ table {
 }
 
 .red-sm {
-  background-color: red;
+  background-color: #2b3c52;
 }
 
 .yellow-sm {
-  background-color: yellow;
+  background-color: #0ca69b;
 }
 
 .message {
@@ -119,24 +96,24 @@ table {
 }
 
 .white {
-  height: 60px;
-  width: 60px;
-  background-color: #000;
+  height: 50px;
+  width: 50px;
+  background-color: #fff;
   border-radius: 100px;
 }
 
 .red {
-  height: 60px;
-  width: 60px;
-  background-color: red;
+  height: 50px;
+  width: 50px;
+  background-color: #2b3c52;
   border-radius: 100px;
   transition: background-color 0.5s;
 }
 
 .yellow {
-  height: 60px;
-  width: 60px;
-  background-color: yellow;
+  height: 50px;
+  width: 50px;
+  background-color: #0ca69b;
   border-radius: 100px;
   transition: background-color 0.5s;
 }

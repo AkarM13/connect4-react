@@ -23,6 +23,7 @@ export default function Game() {
   const [message, setMessage] = useState("");
   const [mode, setMode] = useState(true);
 
+  const [isAiPlaying, setIsAiPlaying] = useState(false);
   useEffect(() => {
     initBoard();
   }, []);
@@ -117,26 +118,31 @@ export default function Game() {
   }
 
   useEffect(() => {
+    if (currentPlayer === player2) {
+      setIsAiPlaying(true);
+    } else {
+      setIsAiPlaying(false);
+    }
     setTimeout(function () {
       // Call ai play
       if (currentPlayer === player2) {
         aiPlay();
       }
-    }, 700);
+    }, 1000);
   }, [currentPlayer, player2]);
   return (
-    <div>
+    <div className="container">
       <div
         className="winorloss "
         style={{
           backgroundColor:
             gameOver && currentPlayer === 1
-              ? "rgba(0,200,0,0.5)"
-              : "rgba(200,0,0,0.3)",
+              ? "rgba(0,200,0,0.4)"
+              : "rgba(200,0,0,0.4)",
           display: gameOver && currentPlayer ? "table" : "none",
         }}
       >
-        <div className="centerDiv">
+        <div className="flex justify-center items-center flex-col h-full">
           {gameOver && currentPlayer === 1 ? (
             <div>
               <h1>{"Yay, You WON!!!"}</h1>
@@ -146,18 +152,19 @@ export default function Game() {
               <h1>{"Shoot, you LOST!!!"}</h1>
             </div>
           )}
-          <div
-            className="button"
+          <Button
+            variant="primary"
+            className="mt-10 self-center"
             onClick={() => {
               initBoard();
             }}
           >
             New Game
-          </div>
+          </Button>
         </div>
       </div>
       <div className="game">
-        <h1 className="header"> Whatever </h1>
+        <h1 className="text-primary text-4xl mt-4">Connect4</h1>
         <Button variant="secondary" onClick={() => setMode(!mode)}>
           {mode ? "Minimax" : "Random"}
         </Button>
@@ -175,11 +182,19 @@ export default function Game() {
             }
           ></div>
         </div>
-        <table>
+        <table
+          className={`${isAiPlaying ? "pointer-events-none opacity-70" : ""}`}
+        >
           <thead />
           <tbody>
             {board &&
-              board.map((row, i) => <Row key={i} row={row} play={play} />)}
+              board.map((row, i) => (
+                <Row
+                  key={i}
+                  row={row}
+                  play={(column: number) => play(column)}
+                />
+              ))}
           </tbody>
         </table>
         <p className="message"> {message} </p>
