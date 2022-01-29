@@ -16,6 +16,7 @@ body {
   bottom: 0;
   z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
   margin: 0 auto;
+  background-color: #fff;
 }
 
 h1 {
@@ -58,10 +59,22 @@ table {
   transition: background-color 0.5s, color 0.5s;
 }
 
+table {
+  display: flex;
+  margin: 0 auto;
+}
+
+.board-container {
+  padding: 30px;
+  border-radius: 24px;
+  box-shadow: 0 50px 100px -31px hsl(0deg 0% 72% / 86%);
+  background-color: #0763e2;
+  margin: 0 auto;
+}
+
 .cell {
   height: 90px;
   width: 90px;
-  background-color: #e0e2eb;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -74,6 +87,7 @@ table {
   width: 15px;
   border: 1px solid #000;
   border-radius: 100px;
+  box-shadow: inset -1px 6px 7px -6px #5e5e5e;
 }
 
 .circles {
@@ -83,11 +97,11 @@ table {
 }
 
 .red-sm {
-  background-color: #2b3c52;
+  background-color: #f83813;
 }
 
 .yellow-sm {
-  background-color: #0ca69b;
+  background-color: #fffb00;
 }
 
 .message {
@@ -100,12 +114,13 @@ table {
   width: 50px;
   background-color: #fff;
   border-radius: 100px;
+  box-shadow: inset -1px 6px 7px -6px #5e5e5e;
 }
 
 .red {
   height: 50px;
   width: 50px;
-  background-color: #2b3c52;
+  background-color: #f83813;
   border-radius: 100px;
   transition: background-color 0.5s;
 }
@@ -113,7 +128,7 @@ table {
 .yellow {
   height: 50px;
   width: 50px;
-  background-color: #0ca69b;
+  background-color: #fffb00;
   border-radius: 100px;
   transition: background-color 0.5s;
 }

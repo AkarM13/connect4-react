@@ -151,7 +151,7 @@ export default function Game() {
   }, [currentPlayer]);
 
   return (
-    <div className="container">
+    <div className="container ">
       <div
         className="winorloss "
         style={{
@@ -184,9 +184,10 @@ export default function Game() {
           </Button>
         </div>
       </div>
-      <div className="game">
-        <h1 className="text-primary text-4xl mt-4">Connect4</h1>
-
+      <div className="game mt-12">
+        <h1 className="text-primary text-5xl mt-4 font-semibold">
+          CONNECT<span className="text-description">4</span>
+        </h1>
         <div className="row mt-4">
           <div
             className={
@@ -205,7 +206,7 @@ export default function Game() {
           className={`${isAiPlaying ? "pointer-events-none opacity-70" : ""}`}
         >
           <thead />
-          <tbody>
+          <tbody className="board-container">
             {board &&
               board.map((row, i) => (
                 <Row
